@@ -1,0 +1,17 @@
+@BaseUrl = http://localhost:8080
+
+###
+
+GET {{BaseUrl}}
+
+###
+
+POST {{BaseUrl}}/createUser
+Content-Type: application/json
+
+{
+    "email": "cassiano@test.com",
+    "password": "test!dd",
+    "name": "Cassiano",
+    "age": 28
+}
