@@ -6,9 +6,14 @@ import (
 	"github.com/cassianobraz/crudGo/src/configuration/logger"
 	"github.com/cassianobraz/crudGo/src/configuration/validation"
 	"github.com/cassianobraz/crudGo/src/controller/model/request"
-	"github.com/cassianobraz/crudGo/src/controller/model/response"
+	"github.com/cassianobraz/crudGo/src/model"
+	"github.com/cassianobraz/crudGo/src/model/service"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
+)
+
+var (
+	UserDomainInterface model.UserDomainInterface
 )
 
 func CreateUser(c *gin.Context) {
@@ -26,15 +31,21 @@ func CreateUser(c *gin.Context) {
 		return
 	}
 
-	response := response.UserResponse{
-		Id:    "teste",
-		Email: userRequest.Email,
-		Name:  userRequest.Name,
-		Age:   userRequest.Age,
+	domain := model.NewUserDomain(
+		userRequest.Email,
+		userRequest.Password,
+		userRequest.Name,
+		userRequest.Age,
+	)
+
+	service := service.NewUserDomainService()
+	if err := service.CreateUser(domain); err != nil {
+		c.JSON(err.Code, err)
+		return
 	}
 
 	logger.Info("User created successfully",
 		zap.String("journey", "createUser"))
 
-	c.JSON(http.StatusOK, response)
+	c.String(http.StatusOK, "")
 }
