@@ -15,3 +15,13 @@ Content-Type: application/json
     "name": "Cassiano",
     "age": 28
 }
+
+###
+
+PUT  {{BaseUrl}}/updateUser/:id
+Content-Type: application/json
+
+{
+    "name": "Cassiano",
+    "age": 28
+}

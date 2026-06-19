@@ -1,22 +1,32 @@
 package service
 
 import (
-	"fmt"
-
 	"github.com/cassianobraz/crudGo/src/configuration/logger"
 	"github.com/cassianobraz/crudGo/src/configuration/rest_err"
 	"github.com/cassianobraz/crudGo/src/model"
 	"go.uber.org/zap"
 )
 
-func (ud *userDomainService) CreateUser(
+func (ud *userDomainService) CreateUserServices(
 	userDomain model.UserDomainInterface,
-) *rest_err.RestErr {
-	logger.Info("Init createUser model", zap.String("journey", "createUser"))
+) (model.UserDomainInterface, *rest_err.RestErr) {
+
+	logger.Info("Init createUser model",
+		zap.String("journey", "createUser"))
 
 	userDomain.EncryptPassword()
 
-	fmt.Println(userDomain)
+	userDomainRepository, err := ud.userRepository.CreateUser(userDomain)
+	if err != nil {
+		logger.Error("Error trying to call repository",
+			err,
+			zap.String("journey", "createUser"))
+		return nil, err
+	}
 
-	return nil
+	logger.Info(
+		"CreateUser service executed successfully",
+		zap.String("userId", userDomainRepository.GetID()),
+		zap.String("journey", "createUser"))
+	return userDomainRepository, nil
 }
