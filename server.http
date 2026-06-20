@@ -28,4 +28,13 @@ Content-Type: application/json
 
 ###
 
-DELETE  {{BaseUrl}}/deleteUser/:userID
+DELETE  {{BaseUrl}}/deleteUser/6a3622b5e262701c00bd89a4
+
+###
+POST {{BaseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "cassiano@test.com",
+    "password": "test!dd"
+}
