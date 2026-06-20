@@ -1,15 +1,14 @@
 package repository
 
 import (
-	"os"
-
 	"context"
+	"os"
 
 	"github.com/cassianobraz/crudGo/src/configuration/logger"
 	"github.com/cassianobraz/crudGo/src/configuration/rest_err"
 	"github.com/cassianobraz/crudGo/src/model"
 	"github.com/cassianobraz/crudGo/src/model/repository/entity/converter"
-	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/v2/bson"
 	"go.uber.org/zap"
 )
 
@@ -33,7 +32,7 @@ func (ur *userRepository) CreateUser(
 		return nil, rest_err.NewInternalServerError(err.Error())
 	}
 
-	value.ID = result.InsertedID.(primitive.ObjectID)
+	value.ID = result.InsertedID.(bson.ObjectID)
 
 	logger.Info(
 		"CreateUser repository executed successfully",

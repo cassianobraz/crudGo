@@ -6,40 +6,35 @@ import (
 
 	"github.com/cassianobraz/crudGo/src/configuration/logger"
 	"github.com/cassianobraz/crudGo/src/configuration/rest_err"
-	"github.com/cassianobraz/crudGo/src/model"
-	"github.com/cassianobraz/crudGo/src/model/repository/entity/converter"
 	"go.mongodb.org/mongo-driver/v2/bson"
 	"go.uber.org/zap"
 )
 
-func (ur *userRepository) UpdateUser(
+func (ur *userRepository) DeleteUser(
 	userId string,
-	userDomain model.UserDomainInterface,
 ) *rest_err.RestErr {
-	logger.Info("Init updateUser repository",
-		zap.String("journey", "updateUser"))
+	logger.Info("Init DeleteUser repository",
+		zap.String("journey", "DeleteUser"))
 
 	collection_name := os.Getenv(MONGODB_USER_DB)
 	collection := ur.databaseConnection.Collection(collection_name)
 
-	value := converter.ConvertDomainToEntity(userDomain)
 	userIdHex, _ := bson.ObjectIDFromHex(userId)
 
 	filter := bson.D{{Key: "_id", Value: userIdHex}}
-	update := bson.D{{Key: "$set", Value: value}}
 
-	_, err := collection.UpdateOne(context.Background(), filter, update)
+	_, err := collection.DeleteOne(context.Background(), filter)
 	if err != nil {
 		logger.Error("Error trying to updater user",
 			err,
-			zap.String("journey", "updateUser"))
+			zap.String("journey", "DeleteUser"))
 		return rest_err.NewInternalServerError(err.Error())
 	}
 
 	logger.Info(
-		"updateUser repository executed successfully",
+		"DeleteUser repository executed successfully",
 		zap.String("userId", userId),
-		zap.String("journey", "updateUser"))
+		zap.String("journey", "DeleteUser"))
 
 	return nil
 }

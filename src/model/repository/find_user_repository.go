@@ -10,7 +10,6 @@ import (
 	"github.com/cassianobraz/crudGo/src/model"
 	"github.com/cassianobraz/crudGo/src/model/repository/entity"
 	"github.com/cassianobraz/crudGo/src/model/repository/entity/converter"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/v2/bson"
 	"go.mongodb.org/mongo-driver/v2/mongo"
 	"go.uber.org/zap"
@@ -22,7 +21,7 @@ func (ur *userRepository) FindUserByEmail(
 	logger.Info("Init findUserByEmail repository",
 		zap.String("journey", "findUserByEmail"))
 
-	collection_name := os.Getenv(MONGODB_USER_DB)
+	collection_name := getUserCollectionName()
 
 	collection := ur.databaseConnection.Collection(collection_name)
 
@@ -68,7 +67,7 @@ func (ur *userRepository) FindUserByID(
 
 	userEntity := &entity.UserEntity{}
 
-	objectId, _ := primitive.ObjectIDFromHex(id)
+	objectId, _ := bson.ObjectIDFromHex(id)
 	filter := bson.D{{Key: "_id", Value: objectId}}
 	err := collection.FindOne(
 		context.Background(),

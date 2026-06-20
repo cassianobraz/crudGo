@@ -9,7 +9,7 @@ import (
 	"github.com/cassianobraz/crudGo/src/controller/model/request"
 	"github.com/cassianobraz/crudGo/src/model"
 	"github.com/gin-gonic/gin"
-	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/v2/bson"
 	"go.uber.org/zap"
 )
 
@@ -29,9 +29,10 @@ func (uc *userControllerInterface) UpdateUser(c *gin.Context) {
 	}
 
 	userId := c.Param("userId")
-	if _, err := primitive.ObjectIDFromHex(userId); err != nil {
+	if _, err := bson.ObjectIDFromHex(userId); err != nil {
 		errRest := rest_err.NewBadRequestError("Invalid userId, must be a hex value")
 		c.JSON(errRest.Code, errRest)
+		return
 	}
 
 	domain := model.NewUserUpdateDomain(
@@ -43,7 +44,7 @@ func (uc *userControllerInterface) UpdateUser(c *gin.Context) {
 		logger.Error(
 			"Error trying to call UpdateUser service",
 			err,
-			zap.String("journey", "create"))
+			zap.String("journey", "UpdateUser"))
 		c.JSON(err.Code, err)
 		return
 	}

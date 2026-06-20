@@ -18,10 +18,14 @@ Content-Type: application/json
 
 ###
 
-PUT  {{BaseUrl}}/updateUser/:id
+PUT  {{BaseUrl}}/updateUser/PUT_USER_ID_HERE
 Content-Type: application/json
 
 {
     "name": "Cassiano",
     "age": 28
 }
+
+###
+
+DELETE  {{BaseUrl}}/deleteUser/:userID
