@@ -1,11 +1,9 @@
 @BaseUrl = http://localhost:8080
 
 ###
-
 GET {{BaseUrl}}
 
 ###
-
 POST {{BaseUrl}}/createUser
 Content-Type: application/json
 
@@ -17,7 +15,16 @@ Content-Type: application/json
 }
 
 ###
+GET {{BaseUrl}}/getUserById/id
+Accept: application/json
+Authorization: 
 
+###
+GET {{BaseUrl}}/getUserByEmail/email
+Accept: application/json
+Authorization: 
+
+###
 PUT  {{BaseUrl}}/updateUser/PUT_USER_ID_HERE
 Content-Type: application/json
 
@@ -27,7 +34,6 @@ Content-Type: application/json
 }
 
 ###
-
 DELETE  {{BaseUrl}}/deleteUser/6a3622b5e262701c00bd89a4
 
 ###
