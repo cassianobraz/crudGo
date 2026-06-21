@@ -1,13 +1,11 @@
 package controller
 
 import (
-	"fmt"
 	"net/http"
 	"net/mail"
 
 	"github.com/cassianobraz/crudGo/src/configuration/logger"
 	"github.com/cassianobraz/crudGo/src/configuration/rest_err"
-	"github.com/cassianobraz/crudGo/src/model"
 	"github.com/cassianobraz/crudGo/src/view"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/v2/bson"
@@ -20,14 +18,6 @@ func (uc *userControllerInterface) FindUserById(c *gin.Context) {
 	)
 
 	userId := c.Param("userId")
-
-	user, err := model.VerifyToken(c.Request.Header.Get("Authorization"))
-	if err != nil {
-		c.JSON(err.Code, err)
-		return
-	}
-
-	logger.Info(fmt.Sprintf("User authenticated: %#v", user))
 
 	if _, err := bson.ObjectIDFromHex(userId); err != nil {
 		logger.Error("Error trying to validate userId",
@@ -67,14 +57,6 @@ func (uc *userControllerInterface) FindUserByEmail(c *gin.Context) {
 	)
 
 	userEmail := c.Param("userEmail")
-
-	user, err := model.VerifyToken(c.Request.Header.Get("Authorization"))
-	if err != nil {
-		c.JSON(err.Code, err)
-		return
-	}
-
-	logger.Info(fmt.Sprintf("User authenticated: %#v", user))
 
 	if _, err := mail.ParseAddress(userEmail); err != nil {
 		logger.Error("Error trying to validate userEmail",

@@ -15,7 +15,7 @@ Content-Type: application/json
 }
 
 ###
-GET {{BaseUrl}}/getUserById/id
+GET {{BaseUrl}}/getUserById/6a37597259e4c612f63f7d05
 Accept: application/json
 Authorization: 
 
@@ -34,7 +34,7 @@ Content-Type: application/json
 }
 
 ###
-DELETE  {{BaseUrl}}/deleteUser/6a3622b5e262701c00bd89a4
+DELETE  {{BaseUrl}}/deleteUser/6a3628ff71ad6f0c37631596
 
 ###
 POST {{BaseUrl}}/login
