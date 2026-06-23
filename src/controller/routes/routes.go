@@ -4,6 +4,9 @@ import (
 	"github.com/cassianobraz/crudGo/src/controller"
 	"github.com/cassianobraz/crudGo/src/model"
 	"github.com/gin-gonic/gin"
+
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func InitRoutes(
@@ -17,4 +20,6 @@ func InitRoutes(
 	r.DELETE("/deleteUser/:userId", userController.DeleteUser)
 
 	r.POST("/login", userController.LoginUser)
+
+	r.GET("swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 }

@@ -12,6 +12,13 @@ import (
 	"github.com/joho/godotenv"
 )
 
+// @title Meu Primeiro CRUD em GO
+// @version 1.0
+// @description API for crud operations on users
+// @host localhost:8080
+// @BasePath /
+// @schemes http
+// @license MIT
 func main() {
 	logger.Info("About to start user application")
 

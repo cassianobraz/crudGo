@@ -15,6 +15,18 @@ import (
 	"go.uber.org/zap"
 )
 
+// FindUserByEmail retrieves user information based on the provided email.
+// @Summary Find User by Email
+// @Description Retrieves user details based on the email provided as a parameter.
+// @Tags Users
+// @Accept json
+// @Produce json
+// @Param userEmail path string true "Email of the user to be retrieved"
+// @Param Authorization header string true "Insert your access token" default(Bearer <Add access token here>)
+// @Success 200 {object} response.UserResponse "User information retrieved successfully"
+// @Failure 400 {object} rest_err.RestErr "Error: Invalid user ID"
+// @Failure 404 {object} rest_err.RestErr "User not found"
+// @Router /getUserByEmail/{userEmail} [get]
 func (ur *userRepository) FindUserByEmail(
 	email string,
 ) (model.UserDomainInterface, *rest_err.RestErr) {
@@ -55,6 +67,18 @@ func (ur *userRepository) FindUserByEmail(
 	return converter.ConvertEntityToDomain(*userEntity), nil
 }
 
+// FindUserByID retrieves user information based on the provided user ID.
+// @Summary Find User by ID
+// @Description Retrieves user details based on the user ID provided as a parameter.
+// @Tags Users
+// @Accept json
+// @Produce json
+// @Param userId path string true "ID of the user to be retrieved"
+// @Param Authorization header string true "Insert your access token" default(Bearer <Add access token here>)
+// @Success 200 {object} response.UserResponse "User information retrieved successfully"
+// @Failure 400 {object} rest_err.RestErr "Error: Invalid user ID"
+// @Failure 404 {object} rest_err.RestErr "User not found"
+// @Router /getUserById/{userId} [get]
 func (ur *userRepository) FindUserByID(
 	id string,
 ) (model.UserDomainInterface, *rest_err.RestErr) {
